@@ -1,18 +1,17 @@
-//my Node project Start point 
+//my Node project Start point
 
-var http = require('http');
-var path = require('path');
+var http = require("http");
+var path = require("path");
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const flash = require("connect-flash");
-const session = require("express-session");
+const session = require("cookie-session");
 
 const app = express();
 // Passport Config
 require("./config/passport")(passport);
-
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -54,17 +53,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 //Route import for serving static files like css,imges etc
-app.use(express.static('Public'));
+app.use(express.static("Public"));
 // Routes
 app.use("/", require("./routes/index.js"));
 app.use("/users", require("./routes/users.js"));
 
-
-
-var port = 5000;
+var port = process.env.PORT || 5000;
 var server = http.createServer(app);
 server.listen(port, () => {
-    console.log('Server is starting = ' + port);
+  console.log("Server is starting = " + port);
 });
